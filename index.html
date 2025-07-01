@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Registration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Customer Registration</h1>
+  <form id="customerForm" enctype="multipart/form-data">
+    <div class="container">
+      <!-- Left Column -->
+      <div class="column">
+        <div class="column column-left">
+        <div class="form-group">
+          <label for="customerId">Customer ID</label>
+          <input type="text" id="customerId" name="customerId" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="customerName">Customer Name <span class="required">*</span></label>
+          <input type="text" id="customerName" name="customerName" required oninput="validateName(this)">
+        </div>
+
+        <div class="form-group">
+          <label for="fatherName">Father/Spouse Name <span class="required">*</span></label>
+          <input type="text" id="fatherName" name="fatherName" required oninput="validateName(this)">
+          
+        </div>
+
+        <div class="form-group">
+          <label for="dob">D.O.B. <span class="required">*</span></label>
+          <input type="date" id="dob" name="dob" required>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender">
+            <option value="">--Select--</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address <span class="required">*</span></label>
+          <input type="text" id="address" name="address" required>
+        </div>
+
+        <div class="form-group">
+          <label for="mobileNo">Mobile No. <span class="required">*</span></label>
+          <input type="text" id="mobileNo" name="mobileNo" required maxlength="10" oninput="allowOnlyDigits(this)">
+        </div>
+
+        <div class="form-group">
+          <label for="altMobileNo">Alt Mobile No.</label>
+          <input type="text" id="altMobileNo" name="altMobileNo" maxlength="10" oninput="allowOnlyDigits(this)">
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email">
+          <span class="error-message" id="emailError">Invalid email format</span>
+        </div>
+
+        <div class="form-group">
+          <label for="qualification">Qualification</label>
+          <select id="qualification" name="qualification" onchange="toggleQualificationOther()">
+            <option value="">--Select--</option>
+            <option>10th</option>
+            <option>12th</option>
+            <option>UG</option>
+            <option>PG</option>
+            <option>Diploma</option>
+            <option>Other</option>
+          </select>
+          <div id="otherQualificationGroup" class="other-option-container" style="display:none;">
+            <input type="text" id="otherQualification" name="otherQualification" placeholder="Specify qualification">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="occupation">Occupation</label>
+          <select id="occupation" name="occupation" onchange="toggleOccupationOther()">
+            <option value="">--Select--</option>
+            <option>Student</option>
+            <option>Employed</option>
+            <option>Self-Employed</option>
+            <option>Business</option>
+            <option>Retired</option>
+            <option>Other</option>
+          </select>
+          <div id="otherOccupationGroup" class="other-option-container" style="display:none;">
+            <input type="text" id="otherOccupation" name="otherOccupation" placeholder="Specify occupation">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="revenue">Revenue</label>
+          <input type="text" id="revenue" name="revenue" oninput="allowDecimal(this)">
+          
+        </div>
+        </div>
+      </div>
+      <!-- Middle Column -->
+      <div class="column">
+        <div class="column column-middle">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date">
+        </div>
+        <h2>Proof Details</h2>
+        <div class="proof-row">
+          <select class="proofType" id="proofType1" name="proofType1" required >
+            <option value="">proof type</option>
+            <option>Aadhar</option>
+            <option>Driving Licence</option>
+            <option>PAN Card</option>
+            <option>Voter ID</option>
+            <option>Ration Card</option>
+            <option>Employee ID Card</option> 
+          </select>
+          <input type="text" id="proofNumber1" name="proofNumber1" placeholder="proof number" required oninput="allowOnlyDigits(this)"><span class="required">*</span>
+        </div>
+        <div class="proof-row">
+          <select class="proofType" id="proofType2" name="proofType2">
+            <option value="">proof type</option>
+            <option>Aadhar</option>
+            <option>Driving Licence</option>
+            <option>PAN Card</option>
+            <option>Voter ID</option>
+            <option>Ration Card</option>
+            <option>Employee ID Card</option>
+          </select>
+          <input type="text" id="proofNumber2" name="proofNumber2" placeholder="proof number" oninput="allowOnlyDigits(this)">
+        </div>
+        <div class="proof-row">
+          <select class="proofType" id="proofType3" name="proofType3">
+            <option value="">proof type</option>
+            <option>Aadhar</option>
+            <option>Driving Licence</option>
+            <option>PAN Card</option>
+            <option>Voter ID</option>
+            <option>Ration Card</option>
+            <option>Employee ID Card</option>
+          </select>
+          <input type="text" id="proofNumber3" name="proofNumber3" placeholder="proof number" oninput="allowOnlyDigits(this)">
+        </div>
+        <h2>Introducer Details</h2>
+        <div class="form-group">
+          <label for="introducer">Introducer</label>
+          <select id="introducer" name="introducer" onchange="toggleIntroducerFields()">
+            <option value="">--Select--</option>
+            <option value="management">Management</option>
+            <option value="employee">Employee</option>
+            <option value="old_customer">Old Customer</option>
+          </select>
+        </div>
+        <div id="oldCustomerGroup" style="display:none;">
+          <div class="form-group">
+            <label for="oldCustomerId">Customer ID</label>
+            <select id="oldCustomerId" name="oldCustomerId" onchange="fetchOldCustomer()">
+              <option value="">--Select--</option>
+              <!-- Options populated by JavaScript -->
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="introducerName">Name</label>
+          <input type="text" id="introducerName" name="introducerName">
+        </div>
+        <div class="form-group">
+          <label for="refId">Ref ID</label>
+          <select id="refId" name="refId">
+            <option value="">Select</option>
+            <option>REF001</option>
+            <option>REF002</option>
+            <option>REF003</option>
+            <option>REF004</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="remarks">Remarks</label>
+          <input type="text" id="remarks" name="remarks">
+        </div>
+        <div class="form-group">
+          <label for="loanLimit">Loan Limit</label>
+          <input type="text" id="loanLimit" name="loanLimit" placeholder="₹" oninput="allowDecimal(this)">
+          <span class="error-message" id="loanLimitError">Must be a valid number</span>
+        </div>
+        <center><button type="submit" id="submitBtn">Submit</button></center>
+      </div>
+      </div>
+      <!-- Right Column -->
+      <div class="column">
+        <div class="column column-right">
+        <h2>Upload Images</h2>
+        <div class="upload-section">
+          <label>Photo (max 100KB)</label>
+          <div class="image-box" id="photoBox"></div>
+          <button type="button" onclick="document.getElementById('photo').click()">Browse</button>
+          <input type="file" id="photo" name="photo" accept="image/jpeg,image/jpg,image/png" style="display:none">
+        </div>
+        <div class="upload-section">
+          <label>Signature (max 50KB)</label>
+          <div class="image-box" id="signatureBox"></div>
+          <button type="button" onclick="document.getElementById('signature').click()">Browse</button>
+          <input type="file" id="signature" name="signature" accept="image/jpeg,image/jpg,image/png" style="display:none">
+        </div>
+      </div>
+    </div>
+    </div>
+  </form>
+  <script>
+    // Set current date
+    document.getElementById('date').valueAsDate = new Date();
+    
+    // Generate new Customer ID
+    function generateCustomerId() {
+      fetch('customers.json')
+        .then(res => res.json())
+        .then(data => {
+          let last = data[data.length - 1].cusid;
+          let num = parseInt(last.split('_')[1], 10) + 1;
+          let padded = String(num).padStart(2, '0');
+          document.getElementById('customerId').value = 'CUSTID_' + padded;
+        })
+        .catch(() => {
+          // If file doesn't exist or is empty
+          document.getElementById('customerId').value = 'CUSTID_01';
+        });
+    }
+    
+    // Populate old customer dropdown
+    function populateOldCustomerDropdown() {
+      fetch('customers.json')
+        .then(res => res.json())
+        .then(data => {
+          const select = document.getElementById('oldCustomerId');
+          select.innerHTML = '<option value="">--Select--</option>';
+          data.forEach(customer => {
+            const option = document.createElement('option');
+            option.value = customer.cusid;
+            option.textContent = customer.cusid ;
+            option.setAttribute('data-name', customer.cname);
+            select.appendChild(option);
+          });
+        });
+    }
+    
+    // Load custom options
+    function loadCustomOptions() {
+      fetch('custom_options.json')
+        .then(res => res.json())
+        .then(data => {
+          // Add qualifications to dropdown
+          const qualSelect = document.getElementById('qualification');
+          const otherQualIndex = [...qualSelect.options].findIndex(opt => opt.value === 'Other');
+          data.qualifications.forEach(qual => {
+            if (![...qualSelect.options].some(opt => opt.value === qual)) {
+              const option = new Option(qual,qual);
+              if (otherQualIndex !==-1){
+              qualSelect.add(option, qualSelect.options[otherQualIndex]);
+              }else{
+                qualSelect.add(option);
+              }
+            }
+          });
+          
+          // Add occupations to dropdown
+          const occSelect = document.getElementById('occupation');
+          const otherOccIndex = [...occSelect.options].findIndex(opt => opt.value === 'Other');
+          data.occupations.forEach(occ => {
+            if (![...occSelect.options].some(opt => opt.value === occ)) {
+              const option = new Option(occ,occ);
+              if(otherOccIndex!==-1){
+                occSelect.add(option, occSelect.options[otherOccIndex]);
+              }else{
+                occSelect.add(option);
+              }
+            }
+          });
+           //Call after adding options
+            ensureOtherIsLast(qualSelect);
+            ensureOtherIsLast(occSelect);
+        })
+        .catch(err => console.log('Loading custom options:', err));
+    }
+    // In loadCustomOptions()
+function ensureOtherIsLast(select) {
+  const otherOption = [...select.options].find(opt => opt.value === 'Other');
+  if (otherOption) {
+    select.remove(otherOption.index);
+    select.add(otherOption);
+  }
+}
+
+
+    // Save custom option
+    function saveCustomOption(type, value) {
+      const formData = new FormData();
+      formData.append('type', type);
+      formData.append('value', value);
+      
+      fetch('update_options.php', {
+        method: 'POST',
+        body: formData
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            loadCustomOptions();
+          }
+        })
+        .catch(err => console.error('Error saving option:', err));
+    }
+    
+    window.addEventListener('DOMContentLoaded', () => {
+      generateCustomerId();
+      updateProofOptions();
+      populateOldCustomerDropdown();
+      loadCustomOptions();
+    });
+    
+    // Qualification toggle
+    function toggleQualificationOther() {
+      const other = document.getElementById('otherQualificationGroup');
+      other.style.display = (document.getElementById('qualification').value === 'Other') ? 'block' : 'none';
+    }
+    
+    // Occupation toggle
+    function toggleOccupationOther() {
+      const other = document.getElementById('otherOccupationGroup');
+      other.style.display = (document.getElementById('occupation').value === 'Other') ? 'block' : 'none';
+    }
+  //  if (qualification === 'Other' && !otherQual) {
+  //alert("Please specify a qualification");
+  //return;
+//}
+//if (occuption === 'Other' && !otherQual) {
+ // alert("Please specify a occupation");
+  //return;
+//}
+    // Introducer toggle
+    function toggleIntroducerFields() {
+      document.getElementById('oldCustomerGroup').style.display =
+        (document.getElementById('introducer').value === 'old_customer') ? 'block' : 'none';
+    }
+    
+    // Fetch old-customer name
+    function fetchOldCustomer() {
+      const select = document.getElementById('oldCustomerId');
+      const selectedOption = select.options[select.selectedIndex];
+      if (selectedOption && selectedOption.value) {
+        document.getElementById('introducerName').value = selectedOption.getAttribute('data-name');
+      }
+    }
+    
+    // Proof dropdown logic
+    function updateProofOptions() {
+      const proofTypes = ["Aadhar", "Driving Licence", "PAN Card", "Voter ID", "Ration Card", "Employee ID Card"];
+      const selects = [
+        document.getElementById("proofType1"),
+        document.getElementById("proofType2"),
+        document.getElementById("proofType3")
+      ];
+
+      const selected = selects.map(sel => sel.value);
+
+      selects.forEach((sel, idx) => {
+        const currentValue = sel.value;
+        const otherSelected = selected.filter((_, i) => i !== idx && selected[i]);
+        sel.innerHTML = '<option value="">--Select--</option>';
+        proofTypes.forEach(type => {
+          if (type === currentValue || !otherSelected.includes(type)) {
+            const opt = document.createElement("option");
+            opt.value = type;
+            opt.textContent = type;
+            sel.appendChild(opt);
+          }
+        });
+        sel.value = currentValue;
+      });
+    }
+
+    document.querySelectorAll('.proofType').forEach(el => {
+      el.addEventListener('change', updateProofOptions);
+    });
+
+    window.addEventListener('DOMContentLoaded', updateProofOptions);
+
+
+    // Preview+size validation
+    function previewImage(input, boxId, maxKB) {
+      const file = input.files[0];
+      if (!file) return;
+      if (file.size > maxKB * 1024) {
+        alert(`Please select a file under ${maxKB}KB.`);
+        input.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById(boxId).style.backgroundImage = `url(${e.target.result})`;
+      };
+      reader.readAsDataURL(file);
+    }
+    
+    document.getElementById('photo').addEventListener('change', function() {
+      previewImage(this, 'photoBox', 100);
+    });
+    
+    document.getElementById('signature').addEventListener('change', function() {
+      previewImage(this, 'signatureBox', 50);
+    });
+//cusname, father name to get only alpha values
+    function validateName(input) {
+    input.value = input.value.replace(/[0-9]/g, '');
+  }
+//mobile,proof no input values only nos
+   function allowOnlyDigits(input) {
+    input.value = input.value.replace(/\D/g, '');
+//revenue,loanlimit allowing  decimal values
+  }function allowDecimal(input) {
+    input.value = input.value.replace(/[^0-9.]/g, '');
+    let parts = input.value.split('.');
+    if (parts.length > 2) {
+        input.value = parts[0] + '.' + parts[1];
+    }
+}
+
+//email valid
+    function validateEmail(input) {
+    const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    const error = document.getElementById('emailError');
+    if (input.value === '' || emailPattern.test(input.value)) {
+      error.style.display = 'none';
+    } else {
+      error.style.display = 'inline';
+    }
+  }
+
+    // Add event listeners for validation
+    document.getElementById('customerName').addEventListener('input', () =>
+      validateName(document.getElementById('customerName'), document.getElementById('nameError'))
+    );
+    
+    document.getElementById('fatherName').addEventListener('input', () =>
+      validateName(document.getElementById('fatherName'), document.getElementById('fatherNameError'))
+    );
+    
+    document.getElementById('mobileNo').addEventListener('input', () =>
+      validateMobile(document.getElementById('mobileNo'), document.getElementById('mobileError'))
+    );
+    
+    document.getElementById('altMobileNo').addEventListener('input', () =>
+      validateMobile(document.getElementById('altMobileNo'), document.getElementById('altMobileError'))
+    );
+    
+    document.getElementById('revenue').addEventListener('input', () =>
+      validateNumber(document.getElementById('revenue'), document.getElementById('revenueError'))
+    );
+    
+    document.getElementById('loanLimit').addEventListener('input', () =>
+      validateNumber(document.getElementById('loanLimit'), document.getElementById('loanLimitError'))
+    );
+    
+    document.getElementById('email').addEventListener('input', () =>
+      validateEmail(document.getElementById('email'), document.getElementById('emailError'))
+    );
+
+    // Submit handler
+    document.getElementById('customerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Client-side validation
+      const validations = [
+       
+        validateEmail(document.getElementById('email'), document.getElementById('emailError')) || true
+      ];
+      
+      if (validations.some(valid => !valid)) {
+        return;
+      }
+      
+      // Save custom options if needed
+      const qualification = document.getElementById('qualification').value;
+      if (qualification === 'Other') {
+        const otherQual = document.getElementById('otherQualification').value.trim();
+        if (otherQual) {
+          saveCustomOption('qualification', otherQual);
+        }
+      }
+      
+      const occupation = document.getElementById('occupation').value;
+      if (occupation === 'Other') {
+        const otherOcc = document.getElementById('otherOccupation').value.trim();
+        if (otherOcc) {
+          saveCustomOption('occupation', otherOcc);
+        }
+      }
+      
+      // Submit form
+      const fd = new FormData(this);
+      fetch('save_customer.php', {
+        method: 'POST',
+        body: fd
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === 'success') {
+          const alertDiv = document.createElement('div');
+          alertDiv.className = 'success-alert';
+          alertDiv.innerText = res.message;
+          document.body.appendChild(alertDiv);
+          
+          setTimeout(() => {
+            alertDiv.remove();
+            this.reset();
+            document.getElementById('photoBox').style.backgroundImage = '';
+            document.getElementById('signatureBox').style.backgroundImage = '';
+            document.getElementById('otherQualificationGroup').style.display = 'none';
+            document.getElementById('otherOccupationGroup').style.display = 'none';
+            document.getElementById('oldCustomerGroup').style.display = 'none';
+            updateProofOptions();
+            generateCustomerId();
+          }, 3000);
+        } else {
+          alert(res.message);
+        }
+      })
+      .catch(err => alert("Error: " + err.message));
+    });
+  </script>
+</body>
+</html>
